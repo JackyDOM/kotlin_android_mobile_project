@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email Address*"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#14a63b"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:padding="15dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Email Address"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PASSWORD*"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#14a63b"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:padding="15dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Password"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender*"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#14a63b"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:padding="15dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Gender"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By SignUp, I agree to the Term Of Use and Privancy\nPolicy of Our App."
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:textColor="#7d807e"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-Library collects and processes your email address for making purpose.
+You can easily read the books and can buy the books as well whatever you want to buy or read.
+For Our App you will get the good Books and good author as well. You can search one ever you want
+when you want the books to read. THANK YOU!"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:textColor="#7d807e"/>
+
+        <Button
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btnGoogleLogin"
+            android:layout_width="370dp"
+            android:layout_height="50dp"
+            android:text="SIGN UP"
+            android:backgroundTint="#1d97de"
+            android:background="@drawable/btn_little_rounded"
+            android:textSize="18sp">
+        </Button>
+
+        <LinearLayout
+            android:layout_marginBottom="40dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="already have an account?"
+                android:textStyle="bold"/>
+
+            <Button
+                android:backgroundTint="@color/white"
+                android:id="@+id/backToSignIn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="SignIn"
+                android:textColor="#0a338c"
+                android:layout_marginLeft="10dp"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
