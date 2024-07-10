@@ -60,13 +60,13 @@
             android:layout_marginTop="30dp">
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editUsername"
                 android:layout_height="60dp"
                 android:layout_width="390dp"
                 android:paddingStart="30dp"
                 android:inputType="textPassword"
                 android:layout_marginStart="10dp"
-                android:hint="Email Addresss"
+                android:hint="Username"
                 android:textColor="@android:color/black"
                 android:backgroundTint="@color/white"/>
 

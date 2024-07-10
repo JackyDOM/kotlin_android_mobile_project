@@ -92,7 +92,7 @@ when you want the books to read. THANK YOU!"
         <Button
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/btnGoogleLogin"
+            android:id="@+id/btnSignUp"
             android:layout_width="370dp"
             android:layout_height="50dp"
             android:text="SIGN UP"
