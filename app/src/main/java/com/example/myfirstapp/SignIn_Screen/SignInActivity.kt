@@ -20,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 class SignInActivity : AppCompatActivity() {
+    // initialize the variables
     private lateinit var btnSignUp: Button
     private lateinit var btnSignIn: Button
     private lateinit var sharedPreferences: SharedPreferences
@@ -40,6 +41,7 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         })
 
+        //when user click on button signIn
         btnSignIn.setOnClickListener({
             authenticateUser()
         })
@@ -52,6 +54,7 @@ class SignInActivity : AppCompatActivity() {
         val username = edtUsername.text.toString().trim()
         val password = edtPassword.text.toString().trim()
 
+        // check if the username and password is Empty or not
         if(username.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Username or Password cannot be empty", Toast.LENGTH_LONG).show()
             return
@@ -79,15 +82,15 @@ class SignInActivity : AppCompatActivity() {
                     Log.d("SignIn", "Access Token: $accessToken")
                     Log.d("SignIn", "User ID: $userId")
 
-                    // Store the access token in SharedPreferences
-//                    val editor = sharedPreferences.edit()
-//                    editor.putString("access_token", accessToken)
-//                    editor.putInt("user_id", userId)
-//                    editor.apply()
-//
-//                    val intentSuccess = Intent(this@SignInActivity, MainActivityButtomnavScreen::class.java)
-//                    intentSuccess.putExtra("username", username) // Pass the username to MainActivityHomeScreen
-//                    startActivity(intentSuccess)
+                    //Store the access token in SharedPreferences
+                    val editor = sharedPreferences.edit()
+                    editor.putString("access_token", accessToken)
+                    //editor.putInt("user_id", userId)
+                    editor.apply()
+
+                    val intentSuccess = Intent(this@SignInActivity, MainActivityButtomnavScreen::class.java)
+                    intentSuccess.putExtra("username", username) // Pass the username to MainActivityHomeScreen
+                    startActivity(intentSuccess)
                 } else {
                     Toast.makeText(this@SignInActivity, "Failed to sign in", Toast.LENGTH_LONG).show()
                     Log.e("SignIn", "Failed to sign in: ${response.message()}")
