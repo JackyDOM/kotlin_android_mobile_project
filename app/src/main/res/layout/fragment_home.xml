@@ -44,5 +44,46 @@
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="30dp"
+            android:id="@+id/recycleViewCategory1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General Book"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="17dp"
+                android:padding="5dp"/>
+
+            <TextView
+                android:textColor="#1010de"
+                android:layout_marginStart="150dp"
+                android:id="@+id/txtSeeAllComicBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="See All"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="17dp"
+                android:padding="5dp"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/recycleViewCategory2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </ScrollView>
