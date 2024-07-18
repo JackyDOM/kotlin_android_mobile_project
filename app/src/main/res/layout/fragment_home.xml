@@ -30,7 +30,8 @@
                 android:layout_marginLeft="17dp"
                 android:padding="5dp"/>
 
-            <TextView
+            <Button
+                android:backgroundTint="@color/white"
                 android:textColor="#1010de"
                 android:layout_marginStart="150dp"
                 android:id="@+id/txtSeeAllGeneralBook"

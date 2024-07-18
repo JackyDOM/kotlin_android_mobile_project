@@ -1,6 +1,7 @@
 package com.example.myfirstapp.Home_Screen
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.myfirstapp.Adapters.CategoryBook1Adapter
 import com.example.myfirstapp.Adapters.CategoryBook2Adapter
 import com.example.myfirstapp.Modals.Book
+import com.example.myfirstapp.R
 import com.example.myfirstapp.Services.ApiServiceBanners
 import com.example.myfirstapp.Services.ApiServiceCategory1
 import com.example.myfirstapp.Services.ApiServiceCategory2
@@ -33,6 +37,8 @@ class HomeFragment : Fragment() {
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var categoryBook1Adapter: CategoryBook1Adapter
     private lateinit var categoryBook2Adapter: CategoryBook2Adapter
+    private lateinit var txtGeneralBook: Button
+    private lateinit var txtComicBook: TextView
     private val handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable? = null
     private var currentIndex = 0
@@ -48,6 +54,8 @@ class HomeFragment : Fragment() {
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val retrievedAccessToken: String? = sharedPreferences.getString("access_token", null)
+        txtGeneralBook = binding.root.findViewById(R.id.txtSeeAllGeneralBook)
+        txtComicBook = binding.root.findViewById(R.id.txtSeeAllComicBook)
 
         if (retrievedAccessToken != null && !retrievedAccessToken.isEmpty()) {
             // Log the retrieved access token
@@ -93,6 +101,31 @@ class HomeFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Access token not available or empty", Toast.LENGTH_LONG).show();
         }
+
+        //Go to screen BookGrid
+        txtGeneralBook.setOnClickListener {
+            try {
+                val intenttxtGeneralBook = Intent(context, GridBooksActivity::class.java).apply {
+                    putExtra("categoryName", "ប្រលោមលោក")
+                    putExtra("accessToken", accessToken)
+                }
+                // Log the category name and access token
+                Log.d("CategoryIntent", "Category Name: ប្រលោមលោក, Access Token: $accessToken")
+                startActivity(intenttxtGeneralBook)
+            } catch (e: Exception) {
+                // Log any errors that occur
+                Log.d("CategoryIntentError", "Error occurred: ${e.message}")
+            }
+        }
+
+
+        txtComicBook.setOnClickListener({
+            var intenttxtComicBook = Intent(context, GridBooksActivity::class.java)
+            intenttxtComicBook.putExtra("categoryName", "កម្លែង")
+            intenttxtComicBook.putExtra("accessToken", accessToken)
+            startActivity(intenttxtComicBook)
+        })
+
 
         return binding.getRoot();
     }
