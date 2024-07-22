@@ -1,10 +1,12 @@
 package com.example.myfirstapp.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfirstapp.Home_Screen.BookDetailActivity
 import com.example.myfirstapp.Modals.Book
 import com.example.myfirstapp.databinding.ViewHolderCategorybook2Binding
 import com.squareup.picasso.Picasso
@@ -15,6 +17,23 @@ class CategoryBook2Adapter: ListAdapter<Book, CategoryBook2Adapter.CategoryBook2
             Picasso.get().load(category2book.book_image).into(binding.bannerCategory2)
             binding.txtPricateCategory2.text = category2book.price
             binding.txtTitleCategory2.text = category2book.title
+
+            binding.bannerCategory2.setOnClickListener({v->
+                val context = v.context
+                val intentDookDetail = Intent(context, BookDetailActivity::class.java).apply {
+                    putExtra("book_image_url", category2book.book_image)
+                    putExtra("book_title", category2book.title)
+                    putExtra("book_price", category2book.price)
+                    putExtra("book_publisher", category2book.publisher)
+                    putExtra("book_Category_Name", category2book.category.name)
+                    putExtra("author_name", category2book.author.author_name)
+                    putExtra("description", category2book.description)
+                    putExtra("book_id", category2book.id)
+                    putExtra("book_pdf", category2book.book_pdf)
+                }
+                context.startActivity(intentDookDetail)
+
+            })
         }
     }
 

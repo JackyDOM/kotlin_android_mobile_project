@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
         })
 
 
-        return binding.getRoot();
+        return binding.root
     }
 
     private fun loadBannerImage(){

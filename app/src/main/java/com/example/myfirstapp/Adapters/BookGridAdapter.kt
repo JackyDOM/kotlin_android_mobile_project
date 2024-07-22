@@ -1,10 +1,12 @@
 package com.example.myfirstapp.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfirstapp.Home_Screen.BookDetailActivity
 import com.example.myfirstapp.Modals.Book
 import com.example.myfirstapp.databinding.ViewHolderGridbooksBinding
 import com.squareup.picasso.Picasso
@@ -15,6 +17,21 @@ class BookGridAdapter: ListAdapter<Book, BookGridAdapter.BookGridViewHolder>(Boo
             Picasso.get().load(bookGrid.book_image).into(binding.imageBookGrid)
             binding.txtTitleBookGrid.text = bookGrid.title
             binding.txtPriceBookGrid.text = bookGrid.price
+
+            binding.imageBookGrid.setOnClickListener({v->
+                val context = v.context
+                val intentBookDetail = Intent(context, BookDetailActivity::class.java).apply {
+                    putExtra("book_image_url", bookGrid.book_image)
+                    putExtra("book_title", bookGrid.title)
+                    putExtra("book_price", bookGrid.price)
+                    putExtra("book_publisher", bookGrid.publisher)
+                    putExtra("book_Category_Name", bookGrid.category.name)
+                    putExtra("author_name", bookGrid.author.author_name)
+                    putExtra("description", bookGrid.description)
+                    putExtra("book_id", bookGrid.id)
+                    putExtra("book_pdf", bookGrid.book_pdf)
+                }
+            })
         }
     }
 
