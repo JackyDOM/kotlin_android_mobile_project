@@ -1,10 +1,13 @@
 package com.example.myfirstapp.Adapters
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfirstapp.Author_Screen.AuthorInformationActivity
 import com.example.myfirstapp.Modals.Author
 import com.example.myfirstapp.databinding.ViewHolderAuthorBinding
 import com.squareup.picasso.Picasso
@@ -14,6 +17,31 @@ class AuthorAdapter: ListAdapter<Author, AuthorAdapter.AuthorViewHolder>(AuthorD
         fun bindAuthorImage(authorImage: Author){
             Picasso.get().load(authorImage.author_image).into(binding.authorImage)
             binding.txtAuthorName.text = authorImage.author_name
+
+            binding.authorImage.setOnClickListener { v ->
+                val context = v.context
+                val intentAuthorAdapter =
+                    Intent(context, AuthorInformationActivity::class.java).apply {
+                        putExtra("author_id", authorImage.id)
+                        putExtra("author_image_url", authorImage.author_image)
+                        putExtra("author_gender", authorImage.gender)
+                        putExtra("author_name", authorImage.author_name)
+                        putExtra("author_decs", authorImage.author_decs)
+                    }
+                // Log the intent extras for debugging
+                Log.d("AuthorAdapter", "Author ID: ${authorImage.id}")
+                Log.d("AuthorAdapter", "Author Image URL: ${authorImage.author_image}")
+                Log.d("AuthorAdapter", "Author Gender: ${authorImage.gender}")
+                Log.d("AuthorAdapter", "Author Name: ${authorImage.author_name}")
+                Log.d("AuthorAdapter", "Author Description: ${authorImage.author_decs}")
+
+                try {
+                    context.startActivity(intentAuthorAdapter)
+                    Log.d("AuthorAdapter", "Started AuthorInformationActivity successfully")
+                } catch (e: Exception) {
+                    Log.d("AuthorAdapter", "Error starting AuthorInformationActivity", e)
+                }
+            }
         }
     }
 

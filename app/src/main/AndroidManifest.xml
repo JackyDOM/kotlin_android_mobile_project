@@ -35,6 +35,7 @@
         </activity>
         <activity android:name=".SignIn_Screen.SignInActivity" />
         <activity android:name=".SignUp_Screen.SignUpActivity" />
+        <activity android:name=".Author_Screen.AuthorInformationActivity"/>
     </application>
 
 </manifest>
