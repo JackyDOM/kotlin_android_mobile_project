@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyFirstApp"
         tools:targetApi="31">
         <activity
+            android:name=".Home_Screen.BookPdfActivity"
+            android:exported="false" />
+        <activity
             android:name=".Home_Screen.BookDetailActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
         </activity>
         <activity android:name=".SignIn_Screen.SignInActivity" />
         <activity android:name=".SignUp_Screen.SignUpActivity" />
-        <activity android:name=".Author_Screen.AuthorInformationActivity"/>
+        <activity android:name=".Author_Screen.AuthorInformationActivity" />
     </application>
 
 </manifest>

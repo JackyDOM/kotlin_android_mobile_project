@@ -1,5 +1,6 @@
 package com.example.myfirstapp.Home_Screen
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,23 @@ class BookDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
-        val bookPdf = intent.getStringExtra("book_pdf")
+        val bookPdf: String? = intent.getStringExtra("book_pdf")
+        val addToFavoritesButton: Button = findViewById(R.id.btnAddToFavorites)
+
+        //click and go to PDF screen
+        addToFavoritesButton.setOnClickListener({
+            // Log the value of bookPdf just before starting BookPdfActivity
+            Log.d("BookDetailActivity", "PDF URL: " + bookPdf);
+
+            // Create an Intent to navigate to FavoritesActivity
+            var intentPDF = Intent(this@BookDetailActivity, BookPdfActivity::class.java)
+
+            // Pass the book PDF URL to the BookPdfActivity
+            intentPDF.putExtra("book_pdf_url", bookPdf)
+
+            // Start the FavoritesActivity
+            startActivity(intentPDF)
+        })
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val retrievedAccessToken = sharedPreferences.getString("access_token", null)

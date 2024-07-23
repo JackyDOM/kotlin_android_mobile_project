@@ -31,6 +31,7 @@ class BookGridAdapter: ListAdapter<Book, BookGridAdapter.BookGridViewHolder>(Boo
                     putExtra("book_id", bookGrid.id)
                     putExtra("book_pdf", bookGrid.book_pdf)
                 }
+                context.startActivity(intentBookDetail)
             })
         }
     }
