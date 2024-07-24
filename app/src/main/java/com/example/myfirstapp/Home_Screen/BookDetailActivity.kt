@@ -3,7 +3,6 @@ package com.example.myfirstapp.Home_Screen
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -14,8 +13,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myfirstapp.Modals.CartdataItem
 import com.example.myfirstapp.R
+import com.example.myfirstapp.Services.ApiServicePostCartBook
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 class BookDetailActivity : AppCompatActivity() {
     private val MAX_LINES_COLLAPSED = 5
@@ -29,6 +37,12 @@ class BookDetailActivity : AppCompatActivity() {
 
         val bookPdf: String? = intent.getStringExtra("book_pdf")
         val addToFavoritesButton: Button = findViewById(R.id.btnAddToFavorites)
+        val btnAddToCart: Button = findViewById(R.id.btnAddToCart)
+
+        //button add to cart
+        btnAddToCart.setOnClickListener({
+            AddCartBook()
+        })
 
         //click and go to PDF screen
         addToFavoritesButton.setOnClickListener({
@@ -119,5 +133,70 @@ class BookDetailActivity : AppCompatActivity() {
             }
             isExpanded = !isExpanded
         }
+    }
+
+    private fun AddCartBook(){
+
+        // Check if the item is already added to the cart using bookId
+        val bookId = intent.getIntExtra("book_id", 0)
+        if (addedBookIds.contains(bookId)) {
+            Toast.makeText(this, "Item is already in the cart", Toast.LENGTH_SHORT).show()
+            return  // Exit the method to avoid adding the item again
+        }
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:5000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        // Create ApiServiceCartBook instance
+        var apiServicePostCartBook = retrofit.create(ApiServicePostCartBook::class.java)
+
+
+        // Fetch book details from intent
+        //int bookId = getIntent().getIntExtra("book_id", 0);
+        val userId = intent.getIntExtra("user_id", 0) // Implement this method to get the user ID
+        val quantity = 1 // You can set the quantity as per your requirements
+
+        // Create an instance of AddCartBook and set user_id, book_id, and quantity
+        var addToCart = CartdataItem(
+            book_id = bookId,
+            user_id = userId,
+            quantity = quantity
+        )
+
+        // Make the POST request with the access token in the header and AddCartBook instance in the request body
+        apiServicePostCartBook.AddCartBook("Bearer $accessToken", addToCart)
+            .enqueue(object : Callback<CartdataItem?> {
+                override fun onResponse(call: Call<CartdataItem?>?, response: Response<CartdataItem?>) {
+                    if (response.isSuccessful()) {
+                        // Handle successful response
+//                    Toast.makeText(BookDetailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this@BookDetailActivity, "Successful", Toast.LENGTH_LONG).show()
+                        isItemAddedToCart = true
+
+                        // Add the bookId to the HashSet
+                        addedBookIds.add(bookId)
+                    } else {
+                        // Handle unsuccessful response
+//                    Log.e("AddToCart", "Failed to add book to cart: " + response.message());
+                        Toast.makeText(
+                            this@BookDetailActivity,
+                            "Failed to add book to cart",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<CartdataItem?>?, t: Throwable?) {
+                    // Handle failure
+//                Log.e("AddToCart", "Failed to add book to cart", t);
+                    Toast.makeText(
+                        this@BookDetailActivity,
+                        "Failed to add book to cart",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
     }
 }
