@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfirstapp.Adapters.CartAdapte
 import com.example.myfirstapp.Modals.Book
+import com.example.myfirstapp.Modals.BookX
+import com.example.myfirstapp.Modals.CartDataBookItem
 import com.example.myfirstapp.Services.ApiServiceGetCart
 import com.example.myfirstapp.databinding.FragmentCartBinding
 import retrofit2.Call
@@ -39,9 +41,9 @@ class CartFragment : Fragment() {
         val retrievedAccessToken = sharedPreferences.getString("access_token", null)
         userId = sharedPreferences.getInt("user_id", -1)
 
-        if (retrievedAccessToken != null && !retrievedAccessToken.isEmpty()) {
+        if (!retrievedAccessToken.isNullOrEmpty()) {
             // Log the retrieved access token
-            Log.d("AccessToken", "Retrieved Access Token: " + retrievedAccessToken);
+            Log.d("AccessToken", "Retrieved Access Token: $retrievedAccessToken");
 
         } else {
             // Handle scenario where access token is not available or empty
@@ -57,13 +59,8 @@ class CartFragment : Fragment() {
             loadCartImage()
         }
 
-//        val cartLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        binding.recycleViewCart.setLayoutManager(cartLayoutManager);
-//        var cartAdapter = CartAdapter(getContext());
-//        binding.recycleViewCart.setAdapter(cartAdapter);
-
         binding.recycleViewCart.apply {
-            var cartLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             cartAdapter = CartAdapte()
             adapter = cartAdapter
         }
@@ -78,12 +75,13 @@ class CartFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var apiServiceGetCart = httpClient.create(ApiServiceGetCart::class.java)
-        val task: Call<List<Book>> = apiServiceGetCart.loadCartImage("Bearer $accessToken")
+        val task: Call<List<CartDataBookItem>> = apiServiceGetCart.loadCartImage("Bearer $accessToken")
 
-        task.enqueue(object : Callback<List<Book>> {
-            override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
-                if (response.isSuccessful()) {
-                    val books: List<Book>? = response.body()
+        task.enqueue(object : Callback<List<CartDataBookItem>> {
+            override fun onResponse(call: Call<List<CartDataBookItem>>, response: Response<List<CartDataBookItem>>) {
+                if (response.isSuccessful) {
+                    val books: List<CartDataBookItem>? = response.body()
+                    Log.d("CartFragment", "Books received: $books")
                     if (books != null) {
                         cartAdapter.submitList(books)
                     }
@@ -93,7 +91,7 @@ class CartFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Book>>, t: Throwable?) {
+            override fun onFailure(call: Call<List<CartDataBookItem>>, t: Throwable?) {
                 Toast.makeText(requireContext(), "Failed to load cart items", Toast.LENGTH_LONG).show()
                 Log.e("CartFragment", "Failed to load cart items", t)
             }
