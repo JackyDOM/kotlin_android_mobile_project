@@ -61,7 +61,7 @@ class CartFragment : Fragment() {
 
         binding.recycleViewCart.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            cartAdapter = CartAdapte()
+            cartAdapter = CartAdapte(requireContext())
             adapter = cartAdapter
         }
 
