@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.myfirstapp.Author_Screen.AuthorFragment
 import com.example.myfirstapp.Cart_Screen.CartFragment
-import com.example.myfirstapp.Favorite_Screen.FavoriteFragment
+import com.example.myfirstapp.Search_Screen.SearchFragment
 import com.example.myfirstapp.Home_Screen.HomeFragment
 import com.example.myfirstapp.R
 import com.example.myfirstapp.Setting_Screen.SettingFragment
@@ -32,7 +32,7 @@ class MainActivityButtomnavScreen : AppCompatActivity() {
                 R.id.navCart -> loadFragment(CartFragment(), false)
                 R.id.navSearch -> loadFragment(AuthorFragment(), false)
                 R.id.navNotification -> loadFragment(SettingFragment(), false)
-                else -> loadFragment(FavoriteFragment(), false)
+                else -> loadFragment(SearchFragment(), false)
             }
             true
         }
