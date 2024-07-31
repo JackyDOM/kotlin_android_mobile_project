@@ -1,6 +1,7 @@
 package com.example.myfirstapp.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myfirstapp.Home_Screen.BookDetailActivity
 import com.example.myfirstapp.Modals.DataSearchingItem
 import com.example.myfirstapp.R
 
@@ -38,5 +40,21 @@ class SearchingAdapter(
         val searching = searchResults[position]
         holder.titleTextView.text = searching.title
         Glide.with(holder.bookImageView.context).load(searching.book_image).into(holder.bookImageView)
+
+        holder.bookImageView.setOnClickListener { v ->
+            val context = v.context
+            val intentBookSearch = Intent(context, BookDetailActivity::class.java).apply {
+                putExtra("book_image_url", searching.book_image)
+                putExtra("book_title", searching.title)
+                putExtra("book_price", searching.price)
+                putExtra("book_publisher", searching.publisher)
+                putExtra("book_Category_Name", searching.category.name)
+                putExtra("author_name", searching.author.author_name)
+                putExtra("author_Decs", searching.author.author_decs)
+                putExtra("book_id", searching.id)
+                putExtra("book_pdf", searching.book_pdf)
+            }
+            context.startActivity(intentBookSearch)
+        }
     }
 }

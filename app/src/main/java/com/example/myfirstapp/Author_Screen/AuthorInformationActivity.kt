@@ -2,7 +2,6 @@ package com.example.myfirstapp.Author_Screen
 
 import android.content.SharedPreferences
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -11,16 +10,27 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapp.Adapters.AuthorAdapter
+import com.example.myfirstapp.Adapters.BookAuthorAdapter
+import com.example.myfirstapp.Modals.Book
 import com.example.myfirstapp.R
+import com.example.myfirstapp.Services.ApiServiceAuthorBook
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class AuthorInformationActivity : AppCompatActivity() {
     private val MAX_LINES_COLLAPSED = 2
     private var isExpanded = false
-    private lateinit var authorAdapter: AuthorAdapter
+    private lateinit var bookAuthorAdapter: BookAuthorAdapter
+    private lateinit var recyclerView: RecyclerView
     private var accessToken: String? = null
     private var authorName: String? = null
 
@@ -38,6 +48,21 @@ class AuthorInformationActivity : AppCompatActivity() {
         } else {
             // Handle scenario where access token is not available or empty
             Toast.makeText(this, "Access token not available or empty", Toast.LENGTH_LONG).show()
+        }
+
+        // Initialize the adapter with ListAdapter
+        bookAuthorAdapter = BookAuthorAdapter()
+
+        // Set up the RecyclerView
+        recyclerView = findViewById(R.id.AuthorBookDisplay)
+        val horizontalLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = horizontalLayoutManager
+        recyclerView.adapter = bookAuthorAdapter
+
+
+        // If access token is available, load banner images
+        if (accessToken != null) {
+            loadCategoryImage()
         }
 
         // Get intent extras
@@ -82,5 +107,34 @@ class AuthorInformationActivity : AppCompatActivity() {
         spannableLabel.setSpan(ForegroundColorSpan(Color.GREEN), 0, spannableLabel.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         textView.text = spannableLabel
         textView.append(value)
+    }
+
+    private fun loadCategoryImage(){
+        val httpClient = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:5000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var apiServiceCategory = httpClient.create(ApiServiceAuthorBook::class.java)
+        val task: Call<List<Book>> = apiServiceCategory.FilterAuthorBook("Bearer $accessToken")
+        task.enqueue(object : Callback<List<Book>>{
+            override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
+                if (response.isSuccessful) {
+                    val allBooks = response.body()
+                    if (allBooks != null) {
+                        // Filter books related to the current author
+                        val filteredBooks = allBooks.filter { it.author.author_name == authorName }
+                        bookAuthorAdapter.submitList(filteredBooks)
+                    }
+                } else {
+                    Toast.makeText(this@AuthorInformationActivity, "Failed reload banner", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Book>>, t: Throwable) {
+                Log.d("Error", "Failed to reload banner: ${t.message}", t)
+                Toast.makeText(this@AuthorInformationActivity, "Failed to reload banner", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 }
