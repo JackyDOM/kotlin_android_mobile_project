@@ -14,8 +14,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myfirstapp.Adapters.CategoryBooksAdapter
+import com.example.myfirstapp.Modals.Book
 import com.example.myfirstapp.Modals.CartdataItem
 import com.example.myfirstapp.R
+import com.example.myfirstapp.Services.ApiServiceCategoryBooks
 import com.example.myfirstapp.Services.ApiServicePostCartBook
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -29,8 +34,11 @@ class BookDetailActivity : AppCompatActivity() {
     private val MAX_LINES_COLLAPSED = 5
     private var isExpanded = false
     private val addedBookIds = HashSet<Int>()
+    private lateinit var categoryBooksAdapter: CategoryBooksAdapter
+    private lateinit var recyclerView: RecyclerView
     private var isItemAddedToCart = false
     private lateinit var accessToken: String
+    private var categoryName: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
@@ -68,6 +76,22 @@ class BookDetailActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Access token not available or empty", Toast.LENGTH_LONG).show()
         }
+
+        // Initialize the adapter with ListAdapter
+        categoryBooksAdapter = CategoryBooksAdapter()
+
+        // set up the recycleview
+        recyclerView = findViewById(R.id.CategoryBookDisplay)
+        val horizontalLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = horizontalLayoutManager
+        recyclerView.adapter = categoryBooksAdapter
+
+        // If access token is available, load banner images
+        if(accessToken != null){
+            loadCategoryBookImage()
+        }
+
+        categoryName = intent.getStringExtra("book_Category_Name")
 
         val bookImageUrl = intent.getStringExtra("book_image_url")
         val bookTitle = intent.getStringExtra("book_title")
@@ -198,5 +222,35 @@ class BookDetailActivity : AppCompatActivity() {
                     ).show()
                 }
             })
+    }
+
+    // function display category depend on book that are clicking
+    private fun loadCategoryBookImage(){
+        val httpClient = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:5000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var apiServiceCategoryBook = httpClient.create(ApiServiceCategoryBooks::class.java)
+        val task: Call<List<Book>> = apiServiceCategoryBook.loadCategoryBookImage("Bearer $accessToken")
+        task.enqueue(object : Callback<List<Book>>{
+            override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
+                if(response.isSuccessful){
+                    val categoryBooks = response.body()
+                    if(categoryBooks != null){
+                        //Filter book categories
+                        val filteredCategoryBook = categoryBooks.filter { it.category.name == categoryName }
+                        categoryBooksAdapter.submitList(filteredCategoryBook)
+                    }else {
+                        Toast.makeText(this@BookDetailActivity, "Failed reload banner", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Book>>, t: Throwable) {
+                Log.d("Error", "Failed to reload banner: ${t.message}", t)
+                Toast.makeText(this@BookDetailActivity, "Failed to reload banner", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 }
