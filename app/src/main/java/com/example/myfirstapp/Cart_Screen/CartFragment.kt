@@ -1,11 +1,13 @@
 package com.example.myfirstapp.Cart_Screen
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.example.myfirstapp.Adapters.CartAdapte
 import com.example.myfirstapp.Modals.Book
 import com.example.myfirstapp.Modals.BookX
 import com.example.myfirstapp.Modals.CartDataBookItem
+import com.example.myfirstapp.Payment_Screen.PaymentActivity
 import com.example.myfirstapp.Services.ApiServiceGetCart
 import com.example.myfirstapp.databinding.FragmentCartBinding
 import retrofit2.Call
@@ -27,7 +30,7 @@ class CartFragment : Fragment() {
     private lateinit var cartAdapter: CartAdapte
     var accessToken: String? = null
     var userId = 0 // Add this line
-
+    private lateinit var btnPaynow: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +68,10 @@ class CartFragment : Fragment() {
             adapter = cartAdapter
         }
 
+        binding.btnPaynow.setOnClickListener{
+            handlePayNowClick()
+        }
+
 
         return binding.root
     }
@@ -96,5 +103,33 @@ class CartFragment : Fragment() {
                 Log.e("CartFragment", "Failed to load cart items", t)
             }
         })
+    }
+
+    private fun handlePayNowClick() {
+        val currentList = cartAdapter.currentList
+
+        if (currentList.isEmpty()) {
+            // Toast.makeText(context, "You need to buy first", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You need to buy first", Toast.LENGTH_LONG).show()
+        } else {
+            val bookIds = ArrayList<Int>()
+            val prices = ArrayList<Double>()
+            for (book in currentList) {
+                Log.d("CartFragment", "Cart Item ID: ${book.id}")
+                Log.d("CartFragment", "Actual Book ID: ${book.book.id}")
+                Log.d("CartFragment", "Price: ${book.book.price}")
+
+                bookIds.add(book.book.id)
+                prices.add(book.book.price.toDouble())
+            }
+            Log.d("CartFragment", "User ID: $userId")
+
+            val intent = Intent(context, PaymentActivity::class.java).apply {
+                putExtra("user_id", userId)
+                putIntegerArrayListExtra("book_ids", bookIds)
+                putExtra("prices", prices)
+            }
+            startActivity(intent)
+        }
     }
 }

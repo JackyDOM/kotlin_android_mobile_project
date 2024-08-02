@@ -15,5 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <Button
+            android:id="@+id/btnPaynow"
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="370dp"
+            android:layout_height="60dp"
+            android:text="pay_now"
+            android:background="@drawable/btn_little_rounded"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </ScrollView>
