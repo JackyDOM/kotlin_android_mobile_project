@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.myfirstapp.Modals.PaymentData
+import com.example.myfirstapp.Modals.PaymentCart
 import com.example.myfirstapp.R
 import com.example.myfirstapp.Services.ApiServicePayment
 import retrofit2.Call
@@ -90,7 +90,8 @@ class PaymentActivity : AppCompatActivity() {
                 Toast.makeText(this, "Fields must not be empty", Toast.LENGTH_LONG).show()
             } else {
                 // Create PaymentCart object
-                var paymentCart = PaymentData(userId, bookIds?.get(0) ?: 0, cardNumberText, cardHolderNameText,
+                var paymentCart = PaymentCart(userId,
+                    bookIds?.get(0) ?: 0, cardNumberText, cardHolderNameText,
                     expirationDateText, cvvText, prices?.get(0) ?: 0.0)
 
                 // Call makePayment method
@@ -101,7 +102,7 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     // Method to make payment
-    private fun makePayment(paymentCart: PaymentData) {
+    private fun makePayment(paymentCart: PaymentCart) {
         // Create authorization header
         val authorizationHeader = "Bearer $accessToken"
 
