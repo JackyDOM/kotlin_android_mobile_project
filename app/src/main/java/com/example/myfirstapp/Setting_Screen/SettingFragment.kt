@@ -1,5 +1,6 @@
 package com.example.myfirstapp.Setting_Screen
 
+import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
@@ -43,6 +44,13 @@ class SettingFragment : Fragment() {
 
         // button signOut
         val btnLogout: Button = view.findViewById(R.id.btnLogout)
+//        var btnYourBook: Button = view.findViewById(R.id.btnYourBook)
+
+//        btnYourBook.setOnClickListener({
+//            var IntentYourBook = Intent(context, YourBookActivity::class.java)
+//            startActivity(IntentYourBook)
+//        })
+
 //        val btnYourbook: Button = view.findViewById(R.id.btnYourbook)
         val textViewUsername: TextView = view.findViewById(R.id.textViewUsername)
         val username = activity?.intent?.getStringExtra("username")

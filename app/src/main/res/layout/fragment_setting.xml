@@ -55,22 +55,23 @@
 
             <Button
                 android:id="@+id/btnLogout"
-                android:layout_width="160dp"
+                android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:text="LogOut"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
-            <Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"/>
+<!--            <Space-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="wrap_content"/>-->
 
-            <Button
-                android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:text="YourBook"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
+<!--            <Button-->
+<!--                android:id="@+id/btnYourBook"-->
+<!--                android:layout_width="160dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:text="YourBook"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="20sp"/>-->
 
         </LinearLayout>
 
