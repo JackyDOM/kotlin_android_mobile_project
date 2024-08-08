@@ -78,7 +78,13 @@ class SignInActivity : AppCompatActivity() {
                     val userId = authResponse?.userId ?: 0
 
                     //ToastUtil.showCustomToast(this@MainActivity, "Sign-in successful", true)
-                    Toast.makeText(this@SignInActivity, "Sign-in successful", Toast.LENGTH_LONG).show()
+                    val layoutInflater = layoutInflater
+                    val customToastLayout = layoutInflater.inflate(R.layout.custome_right_toast, null)
+
+                    val toast = Toast(this@SignInActivity)
+                    toast.duration = Toast.LENGTH_LONG
+                    toast.view = customToastLayout
+                    toast.show()
                     Log.d("SignIn", "Access Token: $accessToken")
                     Log.d("SignIn", "User ID: $userId")
 
@@ -92,13 +98,27 @@ class SignInActivity : AppCompatActivity() {
                     intentSuccess.putExtra("username", username) // Pass the username to MainActivityHomeScreen
                     startActivity(intentSuccess)
                 } else {
-                    Toast.makeText(this@SignInActivity, "Failed to sign in", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this@SignInActivity, "Failed to sign in", Toast.LENGTH_LONG).show()
+                    val layoutInflater = layoutInflater
+                    val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_toast, null)
+
+                    val toast = Toast(this@SignInActivity)
+                    toast.duration = Toast.LENGTH_LONG
+                    toast.view = customToastLayout
+                    toast.show()
                     Log.e("SignIn", "Failed to sign in: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                Toast.makeText(this@SignInActivity, "Failed to sign in", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@SignInActivity, "Failed to sign in", Toast.LENGTH_LONG).show()
+                val layoutInflater = layoutInflater
+                val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_toast, null)
+
+                val toast = Toast(this@SignInActivity)
+                toast.duration = Toast.LENGTH_LONG
+                toast.view = customToastLayout
+                toast.show()
                 Log.e("SignIn", "Failed to sign in", t)
             }
         })

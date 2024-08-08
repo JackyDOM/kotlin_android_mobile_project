@@ -5,10 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".Author_Screen.AuthorFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewAuthor"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"/>
+        android:layout_height="wrap_content">
 
+        <!-- Include your toolbar layout -->
+        <include
+            android:layout_marginBottom="20dp"
+            android:id="@+id/includeToolbar"
+            layout="@layout/toobar_home_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"/>
+    </LinearLayout>
 </ScrollView>

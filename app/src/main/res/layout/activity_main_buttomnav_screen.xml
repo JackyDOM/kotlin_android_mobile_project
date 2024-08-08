@@ -22,7 +22,9 @@
         app:labelVisibilityMode="labeled"
         android:padding="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        app:itemIconTint="@color/bottom_nav_icon_colors"
+        app:itemTextColor="@color/bottom_nav_icon_colors"/>
 
 
 </RelativeLayout>

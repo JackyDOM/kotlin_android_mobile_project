@@ -164,7 +164,14 @@ class BookDetailActivity : AppCompatActivity() {
         // Check if the item is already added to the cart using bookId
         val bookId = intent.getIntExtra("book_id", 0)
         if (addedBookIds.contains(bookId)) {
-            Toast.makeText(this, "Item is already in the cart", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Item is already in the cart", Toast.LENGTH_SHORT).show()
+            val layoutInflater = layoutInflater
+            val customToastLayout = layoutInflater.inflate(R.layout.custome_double_cart, null)
+
+            val toast = Toast(this@BookDetailActivity)
+            toast.duration = Toast.LENGTH_LONG
+            toast.view = customToastLayout
+            toast.show()
             return  // Exit the method to avoid adding the item again
         }
 
@@ -196,7 +203,14 @@ class BookDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful()) {
                         // Handle successful response
 //                    Toast.makeText(BookDetailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(this@BookDetailActivity, "Successful", Toast.LENGTH_LONG).show()
+//                        Toast.makeText(this@BookDetailActivity, "Successful", Toast.LENGTH_LONG).show()
+                        val layoutInflater = layoutInflater
+                        val customToastLayout = layoutInflater.inflate(R.layout.custome_right_detailbook, null)
+
+                        val toast = Toast(this@BookDetailActivity)
+                        toast.duration = Toast.LENGTH_LONG
+                        toast.view = customToastLayout
+                        toast.show()
                         isItemAddedToCart = true
 
                         // Add the bookId to the HashSet
@@ -204,22 +218,31 @@ class BookDetailActivity : AppCompatActivity() {
                     } else {
                         // Handle unsuccessful response
 //                    Log.e("AddToCart", "Failed to add book to cart: " + response.message());
-                        Toast.makeText(
-                            this@BookDetailActivity,
-                            "Failed to add book to cart",
-                            Toast.LENGTH_LONG
-                        ).show()
+//                        Toast.makeText(
+//                            this@BookDetailActivity,
+//                            "Failed to add book to cart",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+                        val layoutInflater = layoutInflater
+                        val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_detailbook, null)
+
+                        val toast = Toast(this@BookDetailActivity)
+                        toast.duration = Toast.LENGTH_LONG
+                        toast.view = customToastLayout
+                        toast.show()
                     }
                 }
 
                 override fun onFailure(call: Call<CartdataItem?>?, t: Throwable?) {
                     // Handle failure
 //                Log.e("AddToCart", "Failed to add book to cart", t);
-                    Toast.makeText(
-                        this@BookDetailActivity,
-                        "Failed to add book to cart",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    val layoutInflater = layoutInflater
+                    val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_detailbook, null)
+
+                    val toast = Toast(this@BookDetailActivity)
+                    toast.duration = Toast.LENGTH_LONG
+                    toast.view = customToastLayout
+                    toast.show()
                 }
             })
     }

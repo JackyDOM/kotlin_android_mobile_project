@@ -90,7 +90,15 @@ class SignUpActivity : AppCompatActivity() {
                     val authResponse = response.body()
                     val accessToken = authResponse?.accessToken
                     val userId = authResponse?.user?.id ?: 0
-                    Toast.makeText(this@SignUpActivity, "Sign-up successful", Toast.LENGTH_LONG).show()
+//                  Toast.makeText(this@SignUpActivity, "Sign-up successful", Toast.LENGTH_LONG).show()
+                    val layoutInflater = layoutInflater
+                    val customToastLayout = layoutInflater.inflate(R.layout.custome_right_signup, null)
+
+                    val toast = Toast(this@SignUpActivity)
+                    toast.duration = Toast.LENGTH_LONG
+                    toast.view = customToastLayout
+                    toast.show()
+
                     Log.d("SignUp", "Access Token: $accessToken")
 //                    Log.d("SignUp", "User ID: $userId")
 
@@ -110,14 +118,27 @@ class SignUpActivity : AppCompatActivity() {
 //                    startActivity(intentSuccess)
 //                    finish()
                 } else {
-                    //ToastUtil.showCustomToast(this@MainActivitySignUp, "Failed to sign up", false)
-                    Toast.makeText(this@SignUpActivity, "Failed to Sign-up", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this@SignUpActivity, "Failed to Sign-up", Toast.LENGTH_LONG).show()
+                    val layoutInflater = layoutInflater
+                    val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_signup, null)
+
+                    val toast = Toast(this@SignUpActivity)
+                    toast.duration = Toast.LENGTH_LONG
+                    toast.view = customToastLayout
+                    toast.show()
                     Log.e("SignUp", "Failed to sign up: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                Toast.makeText(this@SignUpActivity, "Failed to sign-up", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@SignUpActivity, "Failed to sign-up", Toast.LENGTH_LONG).show()
+                val layoutInflater = layoutInflater
+                val customToastLayout = layoutInflater.inflate(R.layout.custome_wrong_signup, null)
+
+                val toast = Toast(this@SignUpActivity)
+                toast.duration = Toast.LENGTH_LONG
+                toast.view = customToastLayout
+                toast.show()
                 Log.e("SignUp", "Failed to sign up", t)
             }
         })

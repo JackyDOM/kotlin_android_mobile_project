@@ -10,6 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Include your toolbar layout -->
+        <include
+            android:layout_marginBottom="50dp"
+            android:id="@+id/includeToolbar"
+            layout="@layout/toobar_home_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewBanner"
             android:layout_width="match_parent"

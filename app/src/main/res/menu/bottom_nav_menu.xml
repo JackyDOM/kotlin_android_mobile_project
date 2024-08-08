@@ -25,14 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_new_releases_24"
-        android:title="Search"
+        android:title="Logout"
         android:titleTextColor="@color/black"/>
     <item
         android:id="@+id/navContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_thumb_up_24"
-        android:title="Logout"
+        android:title="Search"
         android:titleTextColor="@color/black"/>
 
 </menu>
