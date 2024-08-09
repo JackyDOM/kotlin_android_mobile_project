@@ -12,7 +12,7 @@
 
         <!-- Include your toolbar layout -->
         <include
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="20dp"
             android:id="@+id/includeToolbar"
             layout="@layout/toobar_home_screen"
             android:layout_width="match_parent"

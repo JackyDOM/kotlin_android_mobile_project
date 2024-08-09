@@ -113,10 +113,10 @@ class SignUpActivity : AppCompatActivity() {
                     val storedToken = sharedPreferences.getString("access_token", null)
                     Log.d("SignUp", "Stored Access Token: $storedToken")
 
-//                    val intentSuccess = Intent(this@SignUpActivity, MainActivityButtomnavScreen::class.java)
-//                    intentSuccess.putExtra("username", username)
-//                    startActivity(intentSuccess)
-//                    finish()
+                    val intentSuccess = Intent(this@SignUpActivity, MainActivityButtomnavScreen::class.java)
+                    intentSuccess.putExtra("username", username)
+                    startActivity(intentSuccess)
+                    finish()
                 } else {
 //                    Toast.makeText(this@SignUpActivity, "Failed to Sign-up", Toast.LENGTH_LONG).show()
                     val layoutInflater = layoutInflater
